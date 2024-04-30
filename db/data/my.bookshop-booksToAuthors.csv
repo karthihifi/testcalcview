@@ -1,0 +1,6 @@
+object;book_ID;author_ID
+BookToAuthor;1;1
+BookToAuthor;2;2
+BookToAuthor;3;1
+BookToAuthor;3;2
+BookToAuthor;3;3
