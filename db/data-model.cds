@@ -24,7 +24,7 @@ context my.bookshop {
                   on books.author = $self;
   }
 
-  @assert.unique : {key : [
+  @assert.unique: {key: [
     book,
     author
   ]}
@@ -34,14 +34,24 @@ context my.bookshop {
     author : Association to Authors;
   }
 
-  view testView as
-    select from CV_TESTBOOKCOUNT {
+  view testView(IP_EMAIL : String, IP_LANG : String) as
+    select from CV_TESTBOOKCOUNT (
+      IP_EMAIL: :IP_EMAIL, IP_LANG: :IP_LANG
+    ) {
       NAME,
       EMAIL,
       BOOK_ID,
-      BOOKCOUNT,
-      Book : Association to one BookTexts on Book.ID = $self.BOOK_ID
+      BOOKCOUNT
     }
+
+//   view testView as
+//     select from CV_TESTBOOKCOUNT {
+//       NAME,
+//       EMAIL,
+//       BOOK_ID,
+//       BOOKCOUNT,
+//       Book : Association to one BookTexts on Book.ID = $self.BOOK_ID
+//     }
 }
 
 // @cds.persistence.exists
@@ -62,11 +72,23 @@ context my.bookshop {
 //   COUNT_1 : Integer64
 // };
 
+///////////////////////////////////////////////////
 @cds.persistence.exists
 @cds.persistence.calcview
-entity CV_TESTBOOKCOUNT {
+entity CV_TESTBOOKCOUNT(IP_EMAIL : String, IP_LANG : String default $user.locale) {
   NAME      : String;
   EMAIL     : String;
   BOOK_ID   : Integer;
+  TITLE     : String;
+  LOCALE    : String;
   BOOKCOUNT : Integer;
 };
+
+// @cds.persistence.exists
+// @cds.persistence.calcview
+// entity CV_TESTBOOKCOUNT {
+//   NAME      : String;
+//   EMAIL     : String;
+//   BOOK_ID   : Integer;
+//   BOOKCOUNT : Integer;
+// };
